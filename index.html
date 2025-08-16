@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Database API - Interactive Documentation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="header-title">🎬 Movie Database API</h1>
+                <p class="header-subtitle">Interactive API Documentation & Testing Platform</p>
+            </div>
+            <nav class="header-nav">
+                <button class="btn btn--outline btn--sm" onclick="scrollToSection('docs')">Documentation</button>
+                <button class="btn btn--outline btn--sm" onclick="scrollToSection('testing')">API Testing</button>
+                <button class="btn btn--outline btn--sm" onclick="scrollToSection('browser')">Data Browser</button>
+                <button class="btn btn--outline btn--sm" onclick="scrollToSection('deployment')">Deployment</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- API Status -->
+            <div class="api-status">
+                <div class="status-indicator">
+                    <span class="status-dot status-dot--active"></span>
+                    <span class="status-text">API Status: <strong>Online</strong></span>
+                </div>
+                <div class="base-url">
+                    <span class="base-url-label">Base URL:</span>
+                    <code class="base-url-code" id="base-url"></code>
+                    <button class="btn btn--sm copy-btn" onclick="copyBaseUrl()" title="Copy Base URL">📋</button>
+                </div>
+            </div>
+
+            <!-- API Documentation Section -->
+            <section id="docs" class="section">
+                <h2 class="section-title">📖 API Documentation</h2>
+                <div class="endpoints-grid">
+                    <!-- Movies Endpoints -->
+                    <div class="endpoint-group">
+                        <h3 class="endpoint-group-title">🎭 Movies</h3>
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <span class="http-method http-method--get">GET</span>
+                                <code class="endpoint-path">/api/movies</code>
+                            </div>
+                            <p class="endpoint-description">Get all movies with optional pagination</p>
+                            <div class="endpoint-params">
+                                <strong>Query Parameters:</strong>
+                                <ul>
+                                    <li><code>limit</code> - Number of results (default: 10)</li>
+                                    <li><code>offset</code> - Skip results (default: 0)</li>
+                                    <li><code>genre</code> - Filter by genre</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <span class="http-method http-method--get">GET</span>
+                                <code class="endpoint-path">/api/movies/:id</code>
+                            </div>
+                            <p class="endpoint-description">Get a specific movie by ID</p>
+                        </div>
+                    </div>
+
+                    <!-- Persons Endpoints -->
+                    <div class="endpoint-group">
+                        <h3 class="endpoint-group-title">👥 Persons</h3>
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <span class="http-method http-method--get">GET</span>
+                                <code class="endpoint-path">/api/persons</code>
+                            </div>
+                            <p class="endpoint-description">Get all persons (actors/crew) with optional pagination</p>
+                            <div class="endpoint-params">
+                                <strong>Query Parameters:</strong>
+                                <ul>
+                                    <li><code>limit</code> - Number of results (default: 10)</li>
+                                    <li><code>offset</code> - Skip results (default: 0)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <span class="http-method http-method--get">GET</span>
+                                <code class="endpoint-path">/api/persons/:id</code>
+                            </div>
+                            <p class="endpoint-description">Get a specific person by ID</p>
+                        </div>
+                    </div>
+
+                    <!-- Producers Endpoints -->
+                    <div class="endpoint-group">
+                        <h3 class="endpoint-group-title">🏢 Producers</h3>
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <span class="http-method http-method--get">GET</span>
+                                <code class="endpoint-path">/api/producers</code>
+                            </div>
+                            <p class="endpoint-description">Get all production companies</p>
+                        </div>
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <span class="http-method http-method--get">GET</span>
+                                <code class="endpoint-path">/api/producers/:id</code>
+                            </div>
+                            <p class="endpoint-description">Get a specific producer by ID</p>
+                        </div>
+                    </div>
+
+                    <!-- Search Endpoint -->
+                    <div class="endpoint-group">
+                        <h3 class="endpoint-group-title">🔍 Search</h3>
+                        <div class="endpoint-card">
+                            <div class="endpoint-header">
+                                <span class="http-method http-method--get">GET</span>
+                                <code class="endpoint-path">/api/search</code>
+                            </div>
+                            <p class="endpoint-description">Search across all entities</p>
+                            <div class="endpoint-params">
+                                <strong>Query Parameters:</strong>
+                                <ul>
+                                    <li><code>q</code> - Search query (required)</li>
+                                    <li><code>type</code> - Filter by type (movies, persons, producers)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Interactive Testing Section -->
+            <section id="testing" class="section">
+                <h2 class="section-title">🧪 API Testing Interface</h2>
+                <div class="testing-interface">
+                    <div class="testing-panel">
+                        <div class="form-group">
+                            <label class="form-label" for="endpoint-select">Endpoint</label>
+                            <select id="endpoint-select" class="form-control" onchange="updateEndpointForm()">
+                                <option value="movies">GET /api/movies</option>
+                                <option value="movies-id">GET /api/movies/:id</option>
+                                <option value="persons">GET /api/persons</option>
+                                <option value="persons-id">GET /api/persons/:id</option>
+                                <option value="producers">GET /api/producers</option>
+                                <option value="producers-id">GET /api/producers/:id</option>
+                                <option value="search">GET /api/search</option>
+                            </select>
+                        </div>
+                        
+                        <div id="endpoint-params" class="endpoint-params-form"></div>
+                        
+                        <div class="testing-actions">
+                            <button class="btn btn--primary" onclick="testEndpoint()">🚀 Send Request</button>
+                            <button class="btn btn--outline" onclick="copyRequestUrl()">📋 Copy URL</button>
+                        </div>
+                        
+                        <div class="request-info">
+                            <div class="request-url">
+                                <label class="form-label">Request URL:</label>
+                                <code id="request-url-display"></code>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="response-panel">
+                        <div class="response-header">
+                            <h3 class="response-title">Response</h3>
+                            <div class="response-status">
+                                <span class="status status--info" id="response-status">Ready</span>
+                            </div>
+                        </div>
+                        <div class="response-content">
+                            <pre id="response-body" class="response-json">Click "Send Request" to test an endpoint</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Browser Section -->
+            <section id="browser" class="section">
+                <h2 class="section-title">📊 Data Browser</h2>
+                <div class="data-browser">
+                    <div class="browser-nav">
+                        <button class="btn btn--outline browser-tab active" data-type="movies" onclick="showDataType('movies')">🎭 Movies</button>
+                        <button class="btn btn--outline browser-tab" data-type="persons" onclick="showDataType('persons')">👥 Persons</button>
+                        <button class="btn btn--outline browser-tab" data-type="producers" onclick="showDataType('producers')">🏢 Producers</button>
+                    </div>
+                    <div class="browser-content">
+                        <div id="data-display" class="data-cards"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deployment Instructions -->
+            <section id="deployment" class="section">
+                <h2 class="section-title">🚀 GitHub Pages Deployment</h2>
+                <div class="deployment-guide">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Step 1: Repository Setup</h3>
+                            <ol>
+                                <li>Create a new GitHub repository</li>
+                                <li>Upload the three files: <code>index.html</code>, <code>style.css</code>, and <code>app.js</code></li>
+                                <li>Go to repository Settings → Pages</li>
+                                <li>Select "Deploy from a branch" and choose "main" branch</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Step 2: Custom Domain (Optional)</h3>
+                            <ol>
+                                <li>Add a <code>CNAME</code> file to your repository with your domain name</li>
+                                <li>Configure your DNS provider to point to GitHub Pages:
+                                    <ul>
+                                        <li>CNAME record: <code>your-domain.com</code> → <code>username.github.io</code></li>
+                                        <li>Or A records pointing to GitHub's IPs</li>
+                                    </ul>
+                                </li>
+                                <li>Enable "Enforce HTTPS" in repository settings</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Step 3: Using the API</h3>
+                            <p>Once deployed, your API will be accessible at:</p>
+                            <ul>
+                                <li>GitHub Pages: <code>https://username.github.io/repository-name/#/api/movies</code></li>
+                                <li>Custom Domain: <code>https://your-domain.com/#/api/movies</code></li>
+                            </ul>
+                            <p><strong>Note:</strong> This is a client-side API simulation. All data is static and changes won't persist.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Movie Database API. Built for GitHub Pages deployment.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
