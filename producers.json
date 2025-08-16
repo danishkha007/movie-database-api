@@ -1,0 +1,32 @@
+[
+  {
+    "id": 3448,
+    "name": "ITV",
+    "origin_country": "GB",
+    "logo_url": "https://image.tmdb.org/t/p/w300/dcA8JDfnnQPMaq8lv2CCiYrNe0S.png"
+  },
+  {
+    "id": 3449,
+    "name": "Paramount Pictures",
+    "origin_country": "US",
+    "logo_url": "https://via.placeholder.com/300x200/1FB8CD/FFFFFF?text=Paramount"
+  },
+  {
+    "id": 3450,
+    "name": "Warner Bros Entertainment",
+    "origin_country": "US",
+    "logo_url": "https://via.placeholder.com/300x200/2D8092/FFFFFF?text=Warner+Bros"
+  },
+  {
+    "id": 3451,
+    "name": "Sony Pictures",
+    "origin_country": "US",
+    "logo_url": "https://via.placeholder.com/300x200/5D878F/FFFFFF?text=Sony+Pictures"
+  },
+  {
+    "id": 3452,
+    "name": "Universal Studios",
+    "origin_country": "US",
+    "logo_url": "https://via.placeholder.com/300x200/626F71/FFFFFF?text=Universal"
+  }
+]

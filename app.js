@@ -1,114 +1,195 @@
-// Movie Database API - Client-side Implementation
+// Movie Database API - External JSON File Loading Implementation
 class MovieDatabaseAPI {
   constructor() {
     this.data = {
-      movies: [
-        {
-          id: 1997,
-          title: "Two Brothers",
-          overview: "Two tigers are separated as cubs and taken into captivity, only to be reunited years later as enemies by an explorer (Pearce) who inadvertently forces them to fight each other.",
-          release_date: "2004-04-07",
-          runtime: 109,
-          genres: ["Adventure", "Drama", "Family"],
-          spoken_languages: ["English", "French", "Thai"],
-          poster_url: "https://image.tmdb.org/t/p/w500/5I2pRuJI3SZVsxP5iaorGaczzkI.jpg",
-          backdrop_url: "https://image.tmdb.org/t/p/w780/aB5123I8MNi3NIg0t9RrP6A7Yla.jpg",
-          cast_ids: [529, 13687, 1281, 20527, 20530],
-          crew_ids: [2358, 17063, 2352, 2359, 469],
-          production_company_ids: [866, 116231, 356],
-          trailer_url: "https://www.youtube.com/watch?v=xvRZIAwkTvQ",
-          imdb_rating: 7.103,
-          vote_count: 836,
-          seo_title: "Two Brothers: Cast, Crew, Production, Box-Office - TimesEntertain",
-          seo_description: "Two Brothers: Two tigers are separated as cubs and taken into captivity, only to be reunited years later as enemies by an explorer (Pearce) who inadvertently forces them to fight each other.",
-          seo_focus_keywords: "Two Brothers,Adventure,Drama,Family,Two Brothers in English,Two Brothers in French,Two Brothers in Thai"
-        },
-        {
-          id: 1998,
-          title: "Sample Movie 2",
-          overview: "Another sample movie for demonstration.",
-          release_date: "2005-05-15",
-          runtime: 120,
-          genres: ["Action", "Thriller"],
-          spoken_languages: ["English"],
-          poster_url: "https://via.placeholder.com/500x750/1FB8CD/FFFFFF?text=Movie+2",
-          backdrop_url: "https://via.placeholder.com/780x439/5D878F/FFFFFF?text=Movie+2+Backdrop",
-          cast_ids: [110756],
-          crew_ids: [110756],
-          production_company_ids: [3448],
-          trailer_url: "https://www.youtube.com/watch?v=sample",
-          imdb_rating: 6.5,
-          vote_count: 425,
-          seo_title: "Sample Movie 2: Action Thriller",
-          seo_description: "An action-packed thriller for demonstration purposes.",
-          seo_focus_keywords: "Sample,Action,Thriller,Movie"
-        }
-      ],
-      persons: [
-        {
-          id: 110756,
-          name: "Juuso Hirvikangas",
-          profile_url: "https://image.tmdb.org/t/p/w300/7rvAPTsfz9U2E5tYghfY8YQlZ94.jpg",
-          roles: [
-            {
-              movie_id: 2,
-              character: "Man in Harbour (uncredited)"
-            }
-          ],
-          crew_roles: [
-            {
-              movie_id: 2,
-              job: "Gaffer",
-              department: "Lighting"
-            },
-            {
-              movie_id: 3,
-              job: "Sound Assistant",
-              department: "Sound"
-            }
-          ]
-        },
-        {
-          id: 110757,
-          name: "Sample Actor",
-          profile_url: "https://via.placeholder.com/300x450/FFC185/000000?text=Sample+Actor",
-          roles: [
-            {
-              movie_id: 1997,
-              character: "Leading Role"
-            }
-          ],
-          crew_roles: []
-        }
-      ],
-      producers: [
-        {
-          id: 3448,
-          name: "ITV",
-          origin_country: "GB",
-          logo_url: "https://image.tmdb.org/t/p/w300/dcA8JDfnnQPMaq8lv2CCiYrNe0S.png"
-        },
-        {
-          id: 3449,
-          name: "Sample Productions",
-          origin_country: "US",
-          logo_url: "https://via.placeholder.com/300x200/B4413C/FFFFFF?text=Sample+Productions"
-        }
-      ]
+      movies: [],
+      persons: [],
+      producers: []
     };
     
     this.baseUrl = window.location.origin + window.location.pathname;
+    this.isLoaded = false;
+    this.loadingStatus = {
+      movies: { loaded: false, error: null, size: 0 },
+      persons: { loaded: false, error: null, size: 0 },
+      producers: { loaded: false, error: null, size: 0 }
+    };
+
+    // JSON file URLs - in production, these would be local files
+    this.dataUrls = {
+      movies: 'https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/7757db19138720f1c78c5dcb8e9ed462/0d631b51-b500-4c24-b952-f7d3937b0a8a/d3349aab.json',
+      persons: 'https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/7757db19138720f1c78c5dcb8e9ed462/0d631b51-b500-4c24-b952-f7d3937b0a8a/e4d77fb8.json',
+      producers: 'https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/7757db19138720f1c78c5dcb8e9ed462/0d631b51-b500-4c24-b952-f7d3937b0a8a/cf115861.json'
+    };
   }
 
-  init() {
+  async init() {
+    try {
+      // Show loading screen and start loading process
+      this.showLoadingScreen();
+      await this.loadAllDataWithDelay();
+      this.initializeApp();
+    } catch (error) {
+      console.error('Failed to initialize API:', error);
+      this.showLoadingError('Failed to initialize the application');
+    }
+  }
+
+  showLoadingScreen() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const mainApp = document.getElementById('main-app');
+    
+    if (loadingScreen && mainApp) {
+      loadingScreen.style.display = 'flex';
+      mainApp.classList.add('hidden');
+    }
+  }
+
+  async loadAllDataWithDelay() {
+    // Add artificial delay to show loading process
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    const loadingPromises = [
+      this.loadDataFileWithDelay('movies', 800),
+      this.loadDataFileWithDelay('persons', 1200),
+      this.loadDataFileWithDelay('producers', 1600)
+    ];
+
+    // Load all files with staggered timing
+    const results = await Promise.allSettled(loadingPromises);
+    
+    // Check if at least one file loaded successfully
+    const successCount = results.filter(result => result.status === 'fulfilled').length;
+    if (successCount === 0) {
+      throw new Error('All data files failed to load');
+    }
+
+    // Wait a moment to show completed state
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    this.isLoaded = true;
+    this.hideLoadingScreen();
+  }
+
+  async loadDataFileWithDelay(type, delay) {
+    // Add delay to stagger the loading visualization
+    await new Promise(resolve => setTimeout(resolve, delay));
+    return this.loadDataFile(type);
+  }
+
+  async loadDataFile(type) {
+    try {
+      this.updateFileStatus(type, 'loading', 'Loading...');
+      
+      const response = await fetch(this.dataUrls[type]);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      
+      // Validate that data is an array
+      if (!Array.isArray(data)) {
+        throw new Error('Invalid data format - expected an array');
+      }
+
+      this.data[type] = data;
+      this.loadingStatus[type] = { 
+        loaded: true, 
+        error: null, 
+        size: this.calculateDataSize(data)
+      };
+      
+      this.updateFileStatus(type, 'success', `Loaded ${data.length} records`);
+      this.updateAppDataStats(type, data.length, this.loadingStatus[type].size);
+      
+      return data;
+    } catch (error) {
+      this.loadingStatus[type] = { 
+        loaded: false, 
+        error: error.message,
+        size: 0
+      };
+      
+      this.updateFileStatus(type, 'error', `Error: ${error.message}`);
+      throw error;
+    }
+  }
+
+  calculateDataSize(data) {
+    const jsonString = JSON.stringify(data);
+    const sizeInBytes = new Blob([jsonString]).size;
+    return Math.round(sizeInBytes / 1024); // Return size in KB
+  }
+
+  updateFileStatus(type, status, text) {
+    const dotElement = document.getElementById(`${type}-dot`);
+    const textElement = document.getElementById(`${type}-text`);
+    
+    if (dotElement) {
+      dotElement.className = `status-dot status-dot--${status}`;
+    }
+    
+    if (textElement) {
+      textElement.textContent = text;
+    }
+  }
+
+  updateAppDataStats(type, count, size) {
+    const countElement = document.getElementById(`${type}-count`);
+    const sizeElement = document.getElementById(`${type}-size`);
+    const dotElement = document.getElementById(`app-${type}-dot`);
+    
+    if (countElement) countElement.textContent = count;
+    if (sizeElement) sizeElement.textContent = `${size} KB`;
+    if (dotElement) dotElement.className = 'status-dot status-dot--success';
+  }
+
+  showLoadingError(message) {
+    const errorElement = document.getElementById('loading-error');
+    const messageElement = document.getElementById('error-message');
+    const spinnerElement = document.querySelector('.loading-spinner');
+    
+    if (errorElement) errorElement.classList.remove('hidden');
+    if (messageElement) messageElement.textContent = message;
+    if (spinnerElement) spinnerElement.style.display = 'none';
+  }
+
+  hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const mainApp = document.getElementById('main-app');
+    
+    if (loadingScreen && mainApp) {
+      loadingScreen.style.opacity = '0';
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        mainApp.classList.remove('hidden');
+        this.updateFilesLoadedCount();
+      }, 500);
+    }
+  }
+
+  updateFilesLoadedCount() {
+    const loadedCount = Object.values(this.loadingStatus).filter(status => status.loaded).length;
+    const totalCount = Object.keys(this.loadingStatus).length;
+    
+    const countElement = document.getElementById('files-loaded-count');
+    if (countElement) {
+      countElement.textContent = `${loadedCount}/${totalCount}`;
+    }
+  }
+
+  initializeApp() {
     this.updateBaseUrl();
     this.setupRouting();
     this.setupEventListeners();
     // Initialize the UI after DOM is ready
     setTimeout(() => {
+      if (window.updateEndpointForm) {
+        window.updateEndpointForm();
+      }
       this.showDataType('movies');
-      this.updateEndpointForm();
-    }, 100);
+    }, 200);
   }
 
   updateBaseUrl() {
@@ -127,14 +208,18 @@ class MovieDatabaseAPI {
     // Handle endpoint parameter changes
     document.addEventListener('change', (e) => {
       if (e.target.matches('.endpoint-param')) {
-        this.updateRequestUrl();
+        if (window.updateRequestUrl) {
+          window.updateRequestUrl();
+        }
       }
     });
 
     // Handle input changes for real-time URL updates
     document.addEventListener('input', (e) => {
       if (e.target.matches('.endpoint-param')) {
-        this.updateRequestUrl();
+        if (window.updateRequestUrl) {
+          window.updateRequestUrl();
+        }
       }
     });
   }
@@ -155,6 +240,10 @@ class MovieDatabaseAPI {
   }
 
   processAPIRequest(path, params) {
+    if (!this.isLoaded) {
+      return this.createErrorResponse(503, 'Data is still loading. Please wait.');
+    }
+
     const pathParts = path.split('/').filter(p => p);
     const endpoint = pathParts[1]; // 'movies', 'persons', 'producers', 'search'
     const id = pathParts[2]; // specific ID if present
@@ -184,7 +273,7 @@ class MovieDatabaseAPI {
     const genre = params.get('genre');
     if (genre) {
       movies = movies.filter(movie => 
-        movie.genres.some(g => g.toLowerCase().includes(genre.toLowerCase()))
+        movie.genres && movie.genres.some(g => g.toLowerCase().includes(genre.toLowerCase()))
       );
     }
 
@@ -282,8 +371,8 @@ class MovieDatabaseAPI {
     if (!type || type === 'movies') {
       results.movies = this.data.movies.filter(movie =>
         movie.title.toLowerCase().includes(searchTerm) ||
-        movie.overview.toLowerCase().includes(searchTerm) ||
-        movie.genres.some(genre => genre.toLowerCase().includes(searchTerm))
+        (movie.overview && movie.overview.toLowerCase().includes(searchTerm)) ||
+        (movie.genres && movie.genres.some(genre => genre.toLowerCase().includes(searchTerm)))
       );
     }
 
@@ -298,7 +387,7 @@ class MovieDatabaseAPI {
     if (!type || type === 'producers') {
       results.producers = this.data.producers.filter(producer =>
         producer.name.toLowerCase().includes(searchTerm) ||
-        producer.origin_country.toLowerCase().includes(searchTerm)
+        (producer.origin_country && producer.origin_country.toLowerCase().includes(searchTerm))
       );
     }
 
@@ -355,6 +444,11 @@ class MovieDatabaseAPI {
   }
 
   showDataType(type) {
+    if (!this.isLoaded || !this.data[type]) {
+      console.warn(`Data type ${type} not loaded yet`);
+      return;
+    }
+
     // Update active tab
     document.querySelectorAll('.browser-tab').forEach(tab => {
       tab.classList.remove('active');
@@ -380,17 +474,17 @@ class MovieDatabaseAPI {
           cardHTML = `
             <div class="data-card">
               <div class="data-card-header">
-                <img src="${item.poster_url}" alt="${item.title}" class="data-card-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <img src="${item.poster_url || ''}" alt="${item.title}" class="data-card-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="data-card-image" style="display:none;">🎬</div>
                 <div>
                   <h4 class="data-card-title">${item.title}</h4>
-                  <p class="data-card-subtitle">ID: ${item.id} | ${item.release_date}</p>
+                  <p class="data-card-subtitle">ID: ${item.id} | ${item.release_date || 'Unknown'}</p>
                 </div>
               </div>
               <div class="data-card-content">
-                <p>${item.overview.substring(0, 150)}${item.overview.length > 150 ? '...' : ''}</p>
+                <p>${(item.overview || 'No description available').substring(0, 150)}${(item.overview || '').length > 150 ? '...' : ''}</p>
                 <div class="data-card-meta">
-                  ${item.genres.map(genre => `<span class="data-tag">${genre}</span>`).join('')}
+                  ${(item.genres || []).map(genre => `<span class="data-tag">${genre}</span>`).join('')}
                 </div>
               </div>
             </div>
@@ -400,7 +494,7 @@ class MovieDatabaseAPI {
           cardHTML = `
             <div class="data-card">
               <div class="data-card-header">
-                <img src="${item.profile_url}" alt="${item.name}" class="data-card-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <img src="${item.profile_url || ''}" alt="${item.name}" class="data-card-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="data-card-image" style="display:none;">👤</div>
                 <div>
                   <h4 class="data-card-title">${item.name}</h4>
@@ -408,9 +502,9 @@ class MovieDatabaseAPI {
                 </div>
               </div>
               <div class="data-card-content">
-                <p><strong>Acting Roles:</strong> ${item.roles.length}</p>
-                <p><strong>Crew Roles:</strong> ${item.crew_roles.length}</p>
-                ${item.crew_roles.length > 0 ? `<p><strong>Departments:</strong> ${[...new Set(item.crew_roles.map(role => role.department))].join(', ')}</p>` : ''}
+                <p><strong>Acting Roles:</strong> ${(item.roles || []).length}</p>
+                <p><strong>Crew Roles:</strong> ${(item.crew_roles || []).length}</p>
+                ${(item.crew_roles || []).length > 0 ? `<p><strong>Departments:</strong> ${[...new Set((item.crew_roles || []).map(role => role.department))].join(', ')}</p>` : ''}
               </div>
             </div>
           `;
@@ -419,7 +513,7 @@ class MovieDatabaseAPI {
           cardHTML = `
             <div class="data-card">
               <div class="data-card-header">
-                <img src="${item.logo_url}" alt="${item.name}" class="data-card-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <img src="${item.logo_url || ''}" alt="${item.name}" class="data-card-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 <div class="data-card-image" style="display:none;">🏢</div>
                 <div>
                   <h4 class="data-card-title">${item.name}</h4>
@@ -427,9 +521,9 @@ class MovieDatabaseAPI {
                 </div>
               </div>
               <div class="data-card-content">
-                <p><strong>Origin Country:</strong> ${item.origin_country}</p>
+                <p><strong>Origin Country:</strong> ${item.origin_country || 'Unknown'}</p>
                 <div class="data-card-meta">
-                  <span class="data-tag">${item.origin_country}</span>
+                  <span class="data-tag">${item.origin_country || 'Unknown'}</span>
                 </div>
               </div>
             </div>
@@ -446,6 +540,31 @@ class MovieDatabaseAPI {
 
 // Global API instance
 let api;
+
+// Retry loading function
+async function retryLoading() {
+  const errorElement = document.getElementById('loading-error');
+  const spinnerElement = document.querySelector('.loading-spinner');
+  
+  if (errorElement) errorElement.classList.add('hidden');
+  if (spinnerElement) spinnerElement.style.display = 'flex';
+  
+  // Reset loading status
+  api.isLoaded = false;
+  api.loadingStatus = {
+    movies: { loaded: false, error: null, size: 0 },
+    persons: { loaded: false, error: null, size: 0 },
+    producers: { loaded: false, error: null, size: 0 }
+  };
+  
+  try {
+    await api.loadAllDataWithDelay();
+    api.initializeApp();
+  } catch (error) {
+    console.error('Retry failed:', error);
+    api.showLoadingError('Retry failed. Please check the console for details.');
+  }
+}
 
 // Wait for DOM to be ready
 document.addEventListener('DOMContentLoaded', function() {
@@ -633,7 +752,10 @@ function updateRequestUrl() {
 }
 
 function testEndpoint() {
-  if (!api) return;
+  if (!api || !api.isLoaded) {
+    showErrorResponse('Data is still loading or failed to load. Please wait or try reloading the page.');
+    return;
+  }
   
   const select = document.getElementById('endpoint-select');
   if (!select) return;

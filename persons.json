@@ -1,0 +1,72 @@
+[
+  {
+    "id": 110756,
+    "name": "Juuso Hirvikangas",
+    "profile_url": "https://image.tmdb.org/t/p/w300/7rvAPTsfz9U2E5tYghfY8YQlZ94.jpg",
+    "roles": [
+      {
+        "movie_id": 2,
+        "character": "Man in Harbour (uncredited)"
+      },
+      {
+        "movie_id": 1998,
+        "character": "Supporting Actor"
+      }
+    ],
+    "crew_roles": [
+      {
+        "movie_id": 2,
+        "job": "Gaffer",
+        "department": "Lighting"
+      },
+      {
+        "movie_id": 3,
+        "job": "Sound Assistant",
+        "department": "Sound"
+      },
+      {
+        "movie_id": 1999,
+        "job": "Director of Photography",
+        "department": "Camera"
+      }
+    ]
+  },
+  {
+    "id": 110757,
+    "name": "Sarah Mitchell",
+    "profile_url": "https://via.placeholder.com/300x450/32B8CD/FFFFFF?text=Sarah+Mitchell",
+    "roles": [
+      {
+        "movie_id": 1997,
+        "character": "Leading Lady"
+      },
+      {
+        "movie_id": 1999,
+        "character": "Adventure Guide"
+      }
+    ],
+    "crew_roles": [
+      {
+        "movie_id": 1998,
+        "job": "Producer",
+        "department": "Production"
+      }
+    ]
+  },
+  {
+    "id": 110758,
+    "name": "Marcus Thompson",
+    "profile_url": "https://via.placeholder.com/300x450/5D878F/FFFFFF?text=Marcus+Thompson",
+    "roles": [
+      {
+        "movie_id": 1998,
+        "character": "Main Villain"
+      },
+      {
+        "movie_id": 1999,
+        "character": "Rival Explorer"
+      }
+    ],
+    "crew_roles": []
+  }
+]

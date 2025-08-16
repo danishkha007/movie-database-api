@@ -1,0 +1,233 @@
+[
+  {
+    "id": 1997,
+    "title": "Two Brothers",
+    "overview": "Two tigers are separated as cubs and taken into captivity, only to be reunited years later as enemies by an explorer (Pearce) who inadvertently forces them to fight each other.",
+    "release_date": "2004-04-07",
+    "runtime": 109,
+    "genres": [
+      "Adventure",
+      "Drama",
+      "Family"
+    ],
+    "spoken_languages": [
+      "English",
+      "French",
+      "Thai"
+    ],
+    "poster_url": "https://image.tmdb.org/t/p/w500/5I2pRuJI3SZVsxP5iaorGaczzkI.jpg",
+    "backdrop_url": "https://image.tmdb.org/t/p/w780/aB5123I8MNi3NIg0t9RrP6A7Yla.jpg",
+    "cast_ids": [
+      529,
+      13687,
+      1281,
+      20527,
+      20530,
+      20532,
+      20531,
+      20526,
+      20528,
+      20529,
+      1014207,
+      1283853,
+      21431,
+      60852,
+      1283854,
+      73726,
+      1014208,
+      40656,
+      1802952,
+      48411,
+      2763193,
+      992717,
+      67715,
+      1188580,
+      1364617,
+      1075114
+    ],
+    "crew_ids": [
+      2358,
+      17063,
+      2352,
+      2359,
+      469,
+      12758,
+      20525,
+      20524,
+      1431082,
+      1325,
+      19156,
+      7786,
+      2176780,
+      8921,
+      12761,
+      2535167,
+      23981,
+      6410,
+      8973,
+      2667727,
+      1372090,
+      1407858,
+      16683,
+      1161611,
+      29423,
+      1412912,
+      46287,
+      19772,
+      10972,
+      1349046,
+      4399,
+      1395024,
+      1367803,
+      1559359,
+      1550692,
+      1433230,
+      40823,
+      1989125,
+      1905704,
+      1973210,
+      1338254,
+      1458570,
+      24006,
+      2791593,
+      1371285
+    ],
+    "production_company_ids": [
+      866,
+      116231,
+      356
+    ],
+    "trailer_url": "https://www.youtube.com/watch?v=xvRZIAwkTvQ",
+    "imdb_rating": 7.103,
+    "vote_count": 836,
+    "ott_platforms": {
+      "link": "https://www.themoviedb.org/movie/1997-deux-freres/watch?locale=IN",
+      "flatrate": [],
+      "buy": [],
+      "rent": [
+        {
+          "logo_path": "/seGSXajazLMCKGB5hnRCidtjay1.jpg",
+          "provider_id": 10,
+          "provider_name": "Amazon Video",
+          "display_priority": 39
+        }
+      ]
+    },
+    "seo_title": "Two Brothers: Cast, Crew, Production, Box-Office - TimesEntertain",
+    "seo_description": "Two Brothers: Two tigers are separated as cubs and taken into captivity, only to be reunited years later as enemies by an explorer (Pearce) who inadvertently forces them to fight each other.",
+    "seo_focus_keywords": "Two Brothers,Adventure,Drama,Family,Two Brothers in English,Two Brothers in French,Two Brothers in Thai",
+    "videos": [
+      {
+        "name": "Two Brothers Official Trailer #1 - Guy Pearce Movie (2004) HD",
+        "type": "Trailer",
+        "site": "YouTube",
+        "key": "xvRZIAwkTvQ",
+        "url": "https://www.youtube.com/watch?v=xvRZIAwkTvQ",
+        "official": false,
+        "published_at": "2012-01-10T07:22:20.000Z"
+      }
+    ]
+  },
+  {
+    "id": 1998,
+    "title": "Sample Movie 2",
+    "overview": "Another sample movie for demonstration purposes.",
+    "release_date": "2005-05-15",
+    "runtime": 120,
+    "genres": [
+      "Action",
+      "Thriller"
+    ],
+    "spoken_languages": [
+      "English"
+    ],
+    "poster_url": "https://via.placeholder.com/500x750/1FB8CD/FFFFFF?text=Movie+2",
+    "backdrop_url": "https://via.placeholder.com/780x439/5D878F/FFFFFF?text=Movie+2+Backdrop",
+    "cast_ids": [
+      110756
+    ],
+    "crew_ids": [
+      110756
+    ],
+    "production_company_ids": [
+      3448
+    ],
+    "trailer_url": "https://www.youtube.com/watch?v=sample",
+    "imdb_rating": 6.5,
+    "vote_count": 425,
+    "ott_platforms": {
+      "link": "https://www.themoviedb.org/movie/1998-sample-movie/watch",
+      "flatrate": [
+        "Netflix"
+      ],
+      "buy": [
+        "Amazon Prime"
+      ],
+      "rent": []
+    },
+    "seo_title": "Sample Movie 2: Action Thriller",
+    "seo_description": "An action-packed thriller for demonstration purposes.",
+    "seo_focus_keywords": "Sample,Action,Thriller,Movie",
+    "videos": []
+  },
+  {
+    "id": 1999,
+    "title": "Adventure Quest",
+    "overview": "A thrilling adventure through uncharted territories with breathtaking landscapes and dangerous encounters.",
+    "release_date": "2006-03-22",
+    "runtime": 135,
+    "genres": [
+      "Adventure",
+      "Action",
+      "Drama"
+    ],
+    "spoken_languages": [
+      "English",
+      "Spanish"
+    ],
+    "poster_url": "https://via.placeholder.com/500x750/2D8092/FFFFFF?text=Adventure+Quest",
+    "backdrop_url": "https://via.placeholder.com/780x439/1FB8CD/FFFFFF?text=Adventure+Quest+Backdrop",
+    "cast_ids": [
+      110756,
+      110757
+    ],
+    "crew_ids": [
+      110756,
+      110757
+    ],
+    "production_company_ids": [
+      3448,
+      3449
+    ],
+    "trailer_url": "https://www.youtube.com/watch?v=adventure",
+    "imdb_rating": 8.2,
+    "vote_count": 1250,
+    "ott_platforms": {
+      "link": "https://www.themoviedb.org/movie/1999-adventure-quest/watch",
+      "flatrate": [
+        "Disney+"
+      ],
+      "buy": [
+        "iTunes",
+        "Google Play"
+      ],
+      "rent": [
+        "Amazon Video"
+      ]
+    },
+    "seo_title": "Adventure Quest: Epic Journey",
+    "seo_description": "Experience the ultimate adventure through dangerous territories.",
+    "seo_focus_keywords": "Adventure,Quest,Action,Drama,Epic",
+    "videos": [
+      {
+        "name": "Adventure Quest Official Trailer",
+        "type": "Trailer",
+        "site": "YouTube",
+        "key": "adventure",
+        "url": "https://www.youtube.com/watch?v=adventure",
+        "official": true,
+        "published_at": "2006-01-15T10:00:00.000Z"
+      }
+    ]
+  }
+]
